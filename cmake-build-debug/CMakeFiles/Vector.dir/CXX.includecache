@@ -314,17 +314,17 @@ cxxabi.h
 acxx_demangle.h
 -
 
-C:/Users/Xiaomi/CLionProjects/Vector/Vector.h
+/home/ilya/CLionProjects/Vector/Vector.h
 cassert
 -
 stdexcept
 -
 
-C:/Users/Xiaomi/CLionProjects/Vector/tests.cpp
+/home/ilya/CLionProjects/Vector/tests.cpp
 gtest/gtest.h
 -
 Vector.h
-C:/Users/Xiaomi/CLionProjects/Vector/Vector.h
+/home/ilya/CLionProjects/Vector/Vector.h
 vector
 -
 

@@ -5,11 +5,36 @@
 #include <stdexcept>
 
 template <class T, class Alloc = std::allocator<T>>
+class Vector;
+
+
+template <class T, class Alloc>
+bool operator==(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+    if (&lhs == &rhs) {
+        return true;
+    } else if (lhs.size() != rhs.size()) {
+        return false;
+    }
+    for (size_t i = 0; i < lhs.size(); ++i) {
+        if (lhs[i] != rhs[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template <class T, class Alloc>
+bool operator!=(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+    return !(lhs == rhs);
+}
+
+
+
+template <class T, class Alloc>
 class Vector {
 public:
     explicit Vector(const Alloc& = Alloc());
-    explicit Vector(size_t, const Alloc& = Alloc());
-    explicit Vector(size_t , const T&, const Alloc& = Alloc());
+    explicit Vector(size_t , const T& = T(), const Alloc& = Alloc());
     ~Vector();
 
     Vector(const Vector&);
@@ -17,16 +42,16 @@ public:
     Vector& operator=(const Vector&) &;
     Vector& operator=(Vector&&) & noexcept ;
 
-    void pushBack(const T& );
-    void pushBack(T&& );
+    void push_back(const T& );
+    void push_back(T&& );
     template <class... Args>
-    void emplaceBack(Args&&... args);
-    void popBack();
+    void emplace_back(Args&&... args);
+    void pop_back();
 
     void clear();
     void reserve(size_t );
     void shrink_to_fit();
-    void resize(size_t , const T& );
+    void resize(size_t , const T& = T());
 
     T& operator [](size_t );
     T& at(size_t );
@@ -42,10 +67,12 @@ public:
     const T& front() const;
     const T& back() const ;
 
-    bool isEmpty() const;
-    size_t getCapacity() const;
-    size_t getSize() const;
+    bool empty() const;
+    size_t capacity() const;
+    size_t size() const;
 
+    friend bool operator == <T, Alloc>(const Vector&, const Vector&);
+    friend bool operator != <T, Alloc>(const Vector&, const Vector&);
 
 private:
     size_t size_ = 0u, capacity_ = 0;
@@ -67,15 +94,12 @@ Vector<T, Alloc>::Vector(const Alloc &init_alloc) :
     arr_(nullptr) {}
 
 template<class T, class Alloc>
-Vector<T, Alloc>::Vector(size_t init_size, const Alloc& init_alloc) :
+Vector<T, Alloc>::Vector(size_t init_size, const T& init_value, const Alloc& init_alloc) :
     size_(init_size),
     capacity_(init_size),
     alloc_(init_alloc),
-    arr_(traits::allocate(alloc_, capacity_)) {};
+    arr_(traits::allocate(alloc_, capacity_)) {
 
-template<class T, class Alloc>
-Vector<T, Alloc>::Vector(size_t init_size, const T& init_value, const Alloc& init_alloc) :
-    Vector(init_size, init_alloc) {
     for (size_t i = 0; i < size_; ++i) {
         traits::construct(alloc_, arr_ + i, init_value);
     }
@@ -176,7 +200,7 @@ Vector<T, Alloc>& Vector<T, Alloc>::operator=(Vector&& other_vector) & noexcept 
             capacity_ = other_vector.capacity_;
             arr_ = other_vector.arr_;
 
-            other_vector.size_ =other_vector.capacity_ = 0;
+            other_vector.size_ = other_vector.capacity_ = 0;
             other_vector.arr_ = nullptr;
         }
     }
@@ -185,7 +209,7 @@ Vector<T, Alloc>& Vector<T, Alloc>::operator=(Vector&& other_vector) & noexcept 
 
 
 
-#define PushBack(method_argument_transmission) { \
+#define pushBack(method_argument_transmission) { \
     if (size_ < capacity_) { \
         traits::construct(alloc_, arr_ + size_, method_argument_transmission); \
     } else if (capacity_ == 0) { \
@@ -208,19 +232,19 @@ Vector<T, Alloc>& Vector<T, Alloc>::operator=(Vector&& other_vector) & noexcept 
 }
 
 template<class T, class Alloc>
-void Vector<T, Alloc>::pushBack(const T& value) {
-    PushBack(value)
+void Vector<T, Alloc>::push_back(const T& value) {
+    pushBack(value)
 }
 
 template<class T, class Alloc>
-void Vector<T, Alloc>::pushBack(T&& value) {
-    PushBack(std::move(value))
+void Vector<T, Alloc>::push_back(T&& value) {
+    pushBack(std::move(value))
 }
 
 template<class T, class Alloc>
 template<class... Args>
-void Vector<T, Alloc>::emplaceBack(Args &&... args) {
-    PushBack(std::forward<Args>(args)...)
+void Vector<T, Alloc>::emplace_back(Args &&... args) {
+    pushBack(std::forward<Args>(args)...)
 }
 
 
@@ -238,13 +262,13 @@ void Vector<T, Alloc>::emplaceBack(Args &&... args) {
 }
 
 template<class T, class Alloc>
-void Vector<T, Alloc>::popBack() {
-    if (this->isEmpty()) {
+void Vector<T, Alloc>::pop_back() {
+    if (this->empty()) {
         throw std::logic_error("deleting from empty array");
     }
     --size_;
     traits::destroy(alloc_, arr_ + size_);
-    if (this->isEmpty()) {
+    if (this->empty()) {
         this->clear();
     } else {
         ReallockIf(size_ <= capacity_ / 4, capacity_ / 2)
@@ -266,7 +290,7 @@ void Vector<T, Alloc>::resize(size_t new_size, const T& value) {
     if (new_size > size_) {
         this->reserve(new_size);
         while (size_ < new_size) {
-            this->pushBack(T());
+            this->push_back(value);
         }
     } else if (new_size < size_) {
         for (size_t i = new_size; i < size_; ++i) {
@@ -338,15 +362,15 @@ const T& Vector<T, Alloc>::back() const {
     return arr_[size_ - 1];
 }
 template<class T, class Alloc>
-bool Vector<T, Alloc>::isEmpty() const {
+bool Vector<T, Alloc>::empty() const {
     return size_ == 0;
 }
 template<class T, class Alloc>
-size_t Vector<T, Alloc>::getCapacity() const {
+size_t Vector<T, Alloc>::capacity() const {
     return capacity_;
 }
 template<class T, class Alloc>
-size_t Vector<T, Alloc>::getSize() const {
+size_t Vector<T, Alloc>::size() const {
     return size_;
 }
 
