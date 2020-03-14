@@ -280,3 +280,40 @@ TEST(Vector, ConstVector) {
         ASSERT_EQ(elem, 6);
     }
 }
+
+TEST(Vector, Iterator) {
+    Vector<int> a(5);
+    for (size_t i = 0; i < a.size(); ++i) {
+        a[i] = i + 1;
+    }
+
+    Vector<int>::Iterator iter = a.begin();
+    Vector<int>::Iterator iter1 = iter++;
+    ++iter;
+    ASSERT_EQ(*iter, 3);
+    *iter = 2;
+    ASSERT_EQ(*iter, 2);
+    *iter = 3;
+    ASSERT_EQ(*iter1, 1);
+
+    ASSERT_EQ(*(iter + 3), 5);
+    ASSERT_EQ(*(iter - 1), 2);
+    ASSERT_EQ(*(iter + (-1)), 2);
+    iter = iter + 3;
+    ASSERT_EQ(iter - iter1, 5);
+    iter -= 4;
+    ASSERT_EQ(*iter, 2);
+    iter += 1;
+    ASSERT_EQ(*iter, 3);
+    ASSERT_EQ(iter[2], 5);
+}
+
+TEST(Vector, ConstIterator) {
+    Vector<int> a(5);
+    for (size_t i = 0; i < a.size(); ++i) {
+        a[i] = i + 1;
+    }
+
+    Vector<int>::ConstIterator iter = a.cbegin();
+    ASSERT_EQ(*iter, 1);
+}

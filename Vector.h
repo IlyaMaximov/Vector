@@ -8,19 +8,10 @@ template <class T, class Alloc = std::allocator<T>>
 class Vector;
 
 
+// Arithmetic operations for Implementing Vector
 template <class T, class Alloc>
 bool operator==(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
-    if (&lhs == &rhs) {
-        return true;
-    } else if (lhs.size() != rhs.size()) {
-        return false;
-    }
-    for (size_t i = 0; i < lhs.size(); ++i) {
-        if (lhs[i] != rhs[i]) {
-            return false;
-        }
-    }
-    return true;
+    return lhs.compare(rhs) == 0;
 }
 
 template <class T, class Alloc>
@@ -28,11 +19,93 @@ bool operator!=(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
     return !(lhs == rhs);
 }
 
+template <class T, class Alloc>
+bool operator<(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+    return lhs.compare(rhs) < 0;
+}
 
+template <class T, class Alloc>
+bool operator<=(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+    return lhs.compare(rhs) <= 0;
+}
+
+template <class T, class Alloc>
+bool operator>(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+    return rhs < lhs;
+}
+
+template <class T, class Alloc>
+bool operator>=(const Vector<T, Alloc>& lhs, const Vector<T, Alloc>& rhs) {
+    return rhs <= lhs;
+}
+
+
+// Arithmetic operations for Bidirectional Iterator
+template <class RandomIterator>
+bool operator==(const RandomIterator& lhs, const RandomIterator& rhs) {
+    return rhs.ptr_ == lhs.ptr_;
+}
+
+template <class RandomIterator>
+bool operator!=(const RandomIterator& lhs, const RandomIterator& rhs) {
+    return rhs.ptr_ != lhs.ptr_;
+}
+
+
+// Arithmetic operations for Random Access Iterator
+template <class RandomIterator>
+RandomIterator operator+(const RandomIterator& iter, const int offset) {
+    return RandomIterator(iter.ptr_ + offset);
+}
+
+template <class RandomIterator>
+RandomIterator operator+(const int offset, const RandomIterator& iter) {
+    return RandomIterator(iter.ptr + offset);
+}
+
+template <class RandomIterator>
+RandomIterator operator-(const RandomIterator& iter, const int offset) {
+    return RandomIterator(iter.ptr_ - offset);
+}
+
+template <class RandomIterator>
+int operator-(const RandomIterator& lhs, const RandomIterator& rhs) {
+    return (lhs.ptr_ - rhs.ptr_);
+}
+
+template <class RandomIterator>
+bool operator<(const RandomIterator& lhs, const RandomIterator& rhs) {
+    return lhs.ptr_ < rhs.ptr_;
+}
+
+template <class RandomIterator>
+bool operator>(const RandomIterator& lhs, const RandomIterator& rhs) {
+    return rhs < lhs;
+}
+
+template <class RandomIterator>
+bool operator<=(const RandomIterator& lhs, const RandomIterator& rhs) {
+    return lhs.ptr_ <= rhs.ptr_;
+}
+
+template <class RandomIterator>
+bool operator>=(const RandomIterator& lhs, const RandomIterator& rhs) {
+    return rhs <= lhs;
+}
+
+//////////////////////////////////////////
+//////////////////////////////////////////
 
 template <class T, class Alloc>
 class Vector {
 public:
+    template <bool is_const>
+    class BaseIterator;
+
+    using ConstIterator = BaseIterator<true>;
+    using Iterator = BaseIterator<false>;
+
+
     explicit Vector(const Alloc& = Alloc());
     explicit Vector(size_t , const T& = T(), const Alloc& = Alloc());
     ~Vector();
@@ -40,7 +113,7 @@ public:
     Vector(const Vector&);
     Vector(Vector&&) noexcept;
     Vector& operator=(const Vector&) &;
-    Vector& operator=(Vector&&) & noexcept ;
+    Vector& operator=(Vector&&) & noexcept;
 
     void push_back(const T& );
     void push_back(T&& );
@@ -55,24 +128,77 @@ public:
 
     T& operator [](size_t );
     T& at(size_t );
-    T* begin();
-    T* end();
-    T& front();
-    T& back();
+    Iterator begin() noexcept;
+    Iterator end() noexcept;
+    T& front() noexcept;
+    T& back() noexcept;
+    T* data() noexcept;
 
     const T& operator [](size_t ) const;
     const T& at(size_t ) const;
-    const T* begin() const;
-    const T* end() const;
-    const T& front() const;
-    const T& back() const ;
+    ConstIterator cbegin() const noexcept;
+    ConstIterator cend() const noexcept;
+    ConstIterator begin() const noexcept;
+    ConstIterator end() const noexcept;
+    const T& front() const noexcept;
+    const T& back() const noexcept;
+    const T* data() const noexcept;
 
-    bool empty() const;
-    size_t capacity() const;
-    size_t size() const;
+    bool empty() const noexcept;
+    size_t capacity() const noexcept;
+    size_t size() const noexcept;
 
+    int compare(const Vector&) const;
     friend bool operator == <T, Alloc>(const Vector&, const Vector&);
     friend bool operator != <T, Alloc>(const Vector&, const Vector&);
+    friend bool operator < <T, Alloc>(const Vector&, const Vector&);
+    friend bool operator <= <T, Alloc>(const Vector&, const Vector&);
+    friend bool operator > <T, Alloc>(const Vector&, const Vector&);
+    friend bool operator >= <T, Alloc>(const Vector&, const Vector&);
+
+
+    template <bool is_const>
+    class BaseIterator: public std::iterator<std::random_access_iterator_tag,
+                                             typename std::conditional<is_const, const T, T>::type> {
+    public:
+        BaseIterator() = default;
+        BaseIterator(const BaseIterator&) = default;
+        explicit BaseIterator(typename BaseIterator::pointer);
+        BaseIterator& operator=(const BaseIterator&) & = default;
+        ~BaseIterator() = default;
+
+        BaseIterator& operator++() &;
+        BaseIterator& operator--() &;
+        BaseIterator operator++(int) &;
+        BaseIterator operator--(int) &;
+
+
+        typename BaseIterator::reference operator*();
+        typename BaseIterator::pointer operator->();
+
+        friend bool operator== <BaseIterator>(const BaseIterator&, const BaseIterator&);
+        friend bool operator!= <BaseIterator>(const BaseIterator&, const BaseIterator&);
+
+        // Еxclusively Random Iterator
+        friend BaseIterator operator+ <BaseIterator>(const BaseIterator&, int offset);
+        friend BaseIterator operator+ <BaseIterator>(int offset, const BaseIterator&);
+        friend BaseIterator operator- <BaseIterator>(const BaseIterator&, int offset);
+        friend int operator- <BaseIterator>(const BaseIterator&, const BaseIterator&);
+
+        friend bool operator< <BaseIterator>(const BaseIterator&, const BaseIterator&);
+        friend bool operator> <BaseIterator>(const BaseIterator&t, const BaseIterator&);
+        friend bool operator<= <BaseIterator>(const BaseIterator&, const BaseIterator&);
+        friend bool operator>= <BaseIterator>(const BaseIterator&, const BaseIterator&);
+
+        BaseIterator& operator+= (int offset);
+        BaseIterator& operator-= (int offset);
+
+        typename BaseIterator::reference operator[] (int offset);
+
+    private:
+        typename BaseIterator::pointer ptr_ = nullptr;
+    };
+
 
 private:
     size_t size_ = 0u, capacity_ = 0;
@@ -80,6 +206,97 @@ private:
     T* arr_ = nullptr;
     using traits = std::allocator_traits<Alloc>;
 };
+
+
+//////////////////////////////////////////
+//////////////////////////////////////////
+
+
+template<class T, class Alloc>
+template<bool is_const>
+Vector<T, Alloc>::BaseIterator<is_const>::BaseIterator(typename BaseIterator<is_const>::pointer ptr) {
+    ptr_ = ptr;
+}
+
+template<class T, class Alloc>
+template<bool is_const>
+typename Vector<T, Alloc>::template BaseIterator<is_const>&
+        Vector<T, Alloc>::BaseIterator<is_const>::operator++() & {
+
+    ++ptr_;
+    return (*this);
+}
+
+template<class T, class Alloc>
+template<bool is_const>
+typename Vector<T, Alloc>::template BaseIterator<is_const>&
+        Vector<T, Alloc>::BaseIterator<is_const>::operator--() & {
+
+    --ptr_;
+    return (*this);
+}
+
+template<class T, class Alloc>
+template<bool is_const>
+typename Vector<T, Alloc>::template BaseIterator<is_const>
+        Vector<T, Alloc>::BaseIterator<is_const>::operator++(int) & {
+
+    BaseIterator tmp(*this);
+    ++ptr_;
+    return tmp;
+}
+
+template<class T, class Alloc>
+template<bool is_const>
+typename Vector<T, Alloc>::template BaseIterator<is_const>
+        Vector<T, Alloc>::BaseIterator<is_const>::operator--(int) & {
+
+    BaseIterator tmp(*this);
+    ++ptr_;
+    return tmp;
+}
+
+template<class T, class Alloc>
+template<bool is_const>
+typename Vector<T, Alloc>::template BaseIterator<is_const>::reference
+        Vector<T, Alloc>::BaseIterator<is_const>::operator*() {
+
+    return *ptr_;
+}
+
+template<class T, class Alloc>
+template<bool is_const>
+typename Vector<T, Alloc>::template BaseIterator<is_const>::pointer
+        Vector<T, Alloc>::BaseIterator<is_const>::operator->() {
+
+    return ptr_;
+}
+
+template<class T, class Alloc>
+template<bool is_const>
+typename Vector<T, Alloc>::template BaseIterator<is_const>&
+        Vector<T, Alloc>::BaseIterator<is_const>::operator+=(const int offset) {
+
+    ptr_ += offset;
+    return (*this);
+}
+
+template<class T, class Alloc>
+template<bool is_const>
+typename Vector<T, Alloc>::template BaseIterator<is_const>&
+        Vector<T, Alloc>::BaseIterator<is_const>::operator-=(const int offset) {
+
+    ptr_ -= offset;
+    return (*this);
+}
+
+template<class T, class Alloc>
+template<bool is_const>
+typename Vector<T, Alloc>::template BaseIterator<is_const>::reference
+        Vector<T, Alloc>::BaseIterator<is_const>::operator[](const int offset) {
+
+    return *(ptr_ + offset);
+}
 
 
 //////////////////////////////////////////
@@ -247,6 +464,8 @@ void Vector<T, Alloc>::emplace_back(Args &&... args) {
     pushBack(std::forward<Args>(args)...)
 }
 
+#undef pushBack
+
 
 #define ReallockIf(condition, new_capacity) { \
     if (condition) { \
@@ -303,6 +522,7 @@ void Vector<T, Alloc>::resize(size_t new_size, const T& value) {
     }
 }
 
+#undef ReallockIf
 
 
 template<class T, class Alloc>
@@ -317,12 +537,12 @@ T& Vector<T, Alloc>::at(size_t ind) {
     return arr_[ind];
 }
 template<class T, class Alloc>
-T* Vector<T, Alloc>::begin() {
-    return arr_;
+typename Vector<T, Alloc>::Iterator Vector<T, Alloc>::begin() noexcept {
+    return Iterator(arr_);
 }
 template<class T, class Alloc>
-T* Vector<T, Alloc>::end() {
-    return arr_ + size_;
+typename Vector<T, Alloc>::Iterator Vector<T, Alloc>::end() noexcept {
+    return Iterator(arr_ + size_);
 }
 template<class T, class Alloc>
 const T& Vector<T, Alloc>::at(size_t ind) const {
@@ -332,12 +552,16 @@ const T& Vector<T, Alloc>::at(size_t ind) const {
     return arr_[ind];
 }
 template<class T, class Alloc>
-T& Vector<T, Alloc>::front() {
+T& Vector<T, Alloc>::front() noexcept {
     return arr_[0];
 }
 template<class T, class Alloc>
-T& Vector<T, Alloc>::back() {
+T& Vector<T, Alloc>::back() noexcept {
     return arr_[size_ - 1];
+}
+template<class T, class Alloc>
+T *Vector<T, Alloc>::data() noexcept {
+    return arr_;
 }
 
 
@@ -346,32 +570,63 @@ const T& Vector<T, Alloc>::operator[](size_t ind) const {
     return arr_[ind];
 }
 template<class T, class Alloc>
-const T* Vector<T, Alloc>::begin() const {
-    return arr_;
+typename Vector<T, Alloc>::ConstIterator Vector<T, Alloc>::cbegin() const noexcept {
+    return ConstIterator(arr_);
 }
 template<class T, class Alloc>
-const T* Vector<T, Alloc>::end() const {
-    return arr_ + size_;
+typename Vector<T, Alloc>::ConstIterator Vector<T, Alloc>::cend() const noexcept {
+    return ConstIterator(arr_ + size_);
 }
 template<class T, class Alloc>
-const T& Vector<T, Alloc>::front() const {
+typename Vector<T, Alloc>::ConstIterator Vector<T, Alloc>::begin() const noexcept {
+    return cbegin();
+}
+template<class T, class Alloc>
+typename Vector<T, Alloc>::ConstIterator Vector<T, Alloc>::end() const noexcept {
+    return cend();
+}
+template<class T, class Alloc>
+const T& Vector<T, Alloc>::front() const noexcept {
     return arr_[0];
 }
 template<class T, class Alloc>
-const T& Vector<T, Alloc>::back() const {
+const T& Vector<T, Alloc>::back() const noexcept {
     return arr_[size_ - 1];
 }
 template<class T, class Alloc>
-bool Vector<T, Alloc>::empty() const {
+const T* Vector<T, Alloc>::data() const noexcept {
+    return arr_;
+}
+
+template<class T, class Alloc>
+bool Vector<T, Alloc>::empty() const noexcept {
     return size_ == 0;
 }
 template<class T, class Alloc>
-size_t Vector<T, Alloc>::capacity() const {
+size_t Vector<T, Alloc>::capacity() const noexcept {
     return capacity_;
 }
 template<class T, class Alloc>
-size_t Vector<T, Alloc>::size() const {
+size_t Vector<T, Alloc>::size() const noexcept {
     return size_;
 }
+
+template<class T, class Alloc>
+int Vector<T, Alloc>::compare(const Vector& rhs) const {
+    const Vector& lhs = *this;
+
+    if (&lhs == &rhs) {
+        return 0;
+    }
+    for (size_t i = 0; i < std::min(lhs.size(), rhs.size()); ++i) {
+        if (lhs[i] < rhs[i]) {
+            return -1;
+        } else if (lhs[i] > rhs[i]) {
+            return 1;
+        }
+    }
+    return lhs.size() - static_cast<int>(rhs.size());
+}
+
 
 #endif //VECTOR_H
