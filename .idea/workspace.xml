@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
+    <generated>
+      <config projectName="Vector" targetName="gtest" />
+      <config projectName="Vector" targetName="gmock" />
+      <config projectName="Vector" targetName="gmock_main" />
+      <config projectName="Vector" targetName="Vector" />
+      <config projectName="Vector" targetName="gtest_main" />
+    </generated>
+  </component>
+  <component name="CMakeSettings">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="120a4415-f374-4eec-95cf-e51a9fdd360d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vector.h" beforeDir="false" afterPath="$PROJECT_DIR$/Vector.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Vector.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Vector.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Vector.dir/tests.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Vector.dir/tests.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Vector" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Vector" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/tests.cpp" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1Xwd7OcCgsuDSUs0xpJ7eb4IEbQ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="cf.advertisement.text.has.clang-format" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.gutterIcons" />
+  </component>
+  <component name="RunManager" selected="CMake Application.Vector">
+    <configuration name="Vector" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Vector" TARGET_NAME="Vector" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Vector" RUN_TARGET_NAME="Vector">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gmock" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Vector" TARGET_NAME="gmock" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gmock_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Vector" TARGET_NAME="gmock_main" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gtest" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Vector" TARGET_NAME="gtest" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="gtest_main" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Vector" TARGET_NAME="gtest_main" CONFIG_NAME="Debug">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="CMake Application.Vector" />
+      <item itemvalue="CMake Application.gmock" />
+      <item itemvalue="CMake Application.gmock_main" />
+      <item itemvalue="CMake Application.gtest" />
+      <item itemvalue="CMake Application.gtest_main" />
+    </list>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="120a4415-f374-4eec-95cf-e51a9fdd360d" name="Default Changelist" comment="" />
+      <created>1581960922319</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1581960922319</updated>
+      <workItem from="1581960923942" duration="6073000" />
+      <workItem from="1581968465417" duration="780000" />
+      <workItem from="1581974538892" duration="646000" />
+      <workItem from="1582017990150" duration="30000" />
+      <workItem from="1582019623518" duration="1162000" />
+      <workItem from="1582145674260" duration="2035000" />
+      <workItem from="1582147955857" duration="1802000" />
+      <workItem from="1582202104484" duration="11485000" />
+      <workItem from="1582227490575" duration="6385000" />
+      <workItem from="1582295213873" duration="16404000" />
+      <workItem from="1582356664272" duration="19418000" />
+      <workItem from="1582487707303" duration="73000" />
+      <workItem from="1582487805626" duration="98000" />
+      <workItem from="1582487913960" duration="48000" />
+      <workItem from="1582487970571" duration="8423000" />
+      <workItem from="1582496758018" duration="11000" />
+      <workItem from="1582526167746" duration="241000" />
+      <workItem from="1582560783426" duration="81000" />
+      <workItem from="1582560918118" duration="287000" />
+      <workItem from="1582561592350" duration="281000" />
+      <workItem from="1582649474964" duration="59000" />
+      <workItem from="1583173295133" duration="223000" />
+      <workItem from="1583180330209" duration="3421000" />
+      <workItem from="1583185988243" duration="223000" />
+      <workItem from="1583232521381" duration="605000" />
+      <workItem from="1583334691051" duration="276000" />
+      <workItem from="1584041551159" duration="3841000" />
+      <workItem from="1584083937731" duration="10199000" />
+      <workItem from="1584169195002" duration="4934000" />
+      <workItem from="1584196174230" duration="19245000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582488004677">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="451" y="210" key="#com.intellij.execution.impl.EditConfigurationsDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1582488004677" />
+    <state x="729" y="254" width="424" height="484" key="FileChooserDialogImpl" timestamp="1584110876112">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="549" y="186" key="FileChooserDialogImpl/0.0.1536.864@0.0.1536.864" timestamp="1582384724568" />
+    <state x="729" y="254" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1584110876112" />
+    <state width="1807" height="161" key="GridCell.Tab.0.bottom" timestamp="1584217893533">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1493" height="175" key="GridCell.Tab.0.bottom/0.0.1536.864@0.0.1536.864" timestamp="1582384725618" />
+    <state width="1807" height="161" key="GridCell.Tab.0.bottom/67.27.1853.1053@67.27.1853.1053" timestamp="1584217893533" />
+    <state width="1807" height="161" key="GridCell.Tab.0.center" timestamp="1584217893532">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1493" height="175" key="GridCell.Tab.0.center/0.0.1536.864@0.0.1536.864" timestamp="1582384725618" />
+    <state width="1807" height="161" key="GridCell.Tab.0.center/67.27.1853.1053@67.27.1853.1053" timestamp="1584217893532" />
+    <state width="1807" height="161" key="GridCell.Tab.0.left" timestamp="1584217893532">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1493" height="175" key="GridCell.Tab.0.left/0.0.1536.864@0.0.1536.864" timestamp="1582384725618" />
+    <state width="1807" height="161" key="GridCell.Tab.0.left/67.27.1853.1053@67.27.1853.1053" timestamp="1584217893532" />
+    <state width="1807" height="161" key="GridCell.Tab.0.right" timestamp="1584217893533">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state width="1493" height="175" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1582384725618" />
+    <state width="1807" height="161" key="GridCell.Tab.0.right/67.27.1853.1053@67.27.1853.1053" timestamp="1584217893533" />
+    <state x="277" y="74" key="SettingsEditor" timestamp="1582304755897">
+      <screen x="0" y="0" width="1536" height="864" />
+    </state>
+    <state x="277" y="74" key="SettingsEditor/0.0.1536.864@0.0.1536.864" timestamp="1582304755897" />
+    <state x="628" y="338" key="com.intellij.ide.util.TipDialog" timestamp="1584196182757">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="465" y="255" key="com.intellij.ide.util.TipDialog/0.0.1536.864@0.0.1536.864" timestamp="1582356961749" />
+    <state x="628" y="338" key="com.intellij.ide.util.TipDialog/67.27.1853.1053@67.27.1853.1053" timestamp="1584196182757" />
+    <state x="580" y="267" width="672" height="677" key="run.anything.popup" timestamp="1584085457060">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="425" y="197" key="run.anything.popup/0.0.1536.864@0.0.1536.864" timestamp="1582365383995" />
+    <state x="580" y="267" width="672" height="677" key="run.anything.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1584085457060" />
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1584211458518">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="656" y="257" width="672" height="678" key="search.everywhere.popup/67.27.1853.1053@67.27.1853.1053" timestamp="1584211458518" />
+  </component>
+</project>
